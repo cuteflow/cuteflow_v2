@@ -30,7 +30,7 @@
 		{
 		    $strLine = trim(fgets($pFile, 4096));
 		    
-		    if ( ($strLine[0] != "#") && (strlen($strLine) > 0) && (substr($strLine,0,5)!="_jotl"))
+		    if ( (substr($strLine,0,1) != "#") && (strlen($strLine) > 0) && (substr($strLine,0,5)!="_jotl"))
 		    {			    
 		    	$nPos = strpos($strLine, "=");
 		    	$strId = substr($strLine, 0, $nPos);
@@ -47,10 +47,13 @@
 		    	$strConfig 		= substr($strLine, 0, $nPos);
 		    	$splitConfig 	= explode (".", $strConfig);
 		    	
-		    	if ($splitConfig[2] == 'encoding')
-		    	{
-		    		$DEFAULT_CHARSET = trim(substr($strLine, $nPos+1));
-		    	}
+		    	if (count($splitConfig)>1)
+				{
+					if ($splitConfig[2] == 'encoding')
+					{
+					$DEFAULT_CHARSET = trim(substr($strLine, $nPos+1));
+					}
+				}
 		    }
 		}		
 		fclose($pFile);
